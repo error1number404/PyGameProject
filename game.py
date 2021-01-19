@@ -121,11 +121,11 @@ class Enemy(pygame.sprite.Sprite):
         else:
             self.cur_frame += 1
         self.image = self.frames[self.cur_frame % len(self.frames)]
-        if self.y // 32 + 2 > player.y // 32 and self.y // 32 - 2 < player.y // 32 and player.hp > 0 and self.hp > 0:
-            if self.x // 32 + 1 > player.x // 32 and self.x // 32 - 1 < player.x // 32 and self.react % 5 == 0:
+        if self.y // 16 + 4 > player.y // 16 and self.y // 16 - 4 < player.y // 16 and player.hp > 0 and self.hp > 0:
+            if self.x // 16 + 1 > player.x // 16 and self.x // 16 - 1 < player.x // 16 and self.react % 5 == 0:
                 self.attack()
                 self.react = 0
-            elif self.x // 32 + 1 > player.x // 32 and self.x // 32 - 1 < player.x // 32:
+            elif self.x // 16 + 1 > player.x // 16 and self.x // 16 - 1 < player.x // 16:
                 pass
             elif self.x < player.x:
                 self.move_right()
@@ -221,8 +221,8 @@ class Hero(pygame.sprite.Sprite):
     def attack(self):
         if self.cur_anim_id != 2:
             self.choose_anim(2, self.mirror)
-            if self.y // 32 + 2 > enemy.y // 32 and self.y // 32 - 2 < enemy.y // 32:
-                if self.x // 32 + 1 > enemy.x // 32 and self.x // 32 - 1 < enemy.x // 30:
+            if self.y // 16 + 2 > enemy.y // 16 and self.y // 16 - 2 < enemy.y // 16:
+                if self.x // 16 + 1 > enemy.x // 16 and self.x // 16 - 1 < enemy.x // 30:
                     enemy.hp -= 10
 
 
@@ -267,7 +267,7 @@ running = True
 update_anims_player = pygame.USEREVENT + 1
 pygame.time.set_timer(update_anims_player, 60)
 update_anims_enemy = pygame.USEREVENT + 2
-pygame.time.set_timer(update_anims_enemy, 120)
+pygame.time.set_timer(update_anims_enemy, 80)
 level = level('data/default_map')
 while running:
     for event in pygame.event.get():
