@@ -23,6 +23,7 @@ class level:
         self.width = self.map.width
         self.tile_width = self.map.tilewidth
         self.tile_height = self.map.tileheight
+        self.layers = []
 
     def render(self, screen):
         for i in range(2):
@@ -222,7 +223,7 @@ class Hero(pygame.sprite.Sprite):
         if self.cur_anim_id != 2:
             self.choose_anim(2, self.mirror)
             if self.y // 16 + 2 > enemy.y // 16 and self.y // 16 - 2 < enemy.y // 16:
-                if self.x // 16 + 1 > enemy.x // 16 and self.x // 16 - 1 < enemy.x // 30:
+                if self.x // 16 +1 > enemy.x // 16 and self.x // 16 - 1 < enemy.x // 16:
                     enemy.hp -= 10
 
 
@@ -278,6 +279,7 @@ while running:
             if player.x_step == 0 and player.y_step == 0 and player.cur_anim_id not in [0,3] and player.cur_frame > 6 and player.crush is False and player.hp > 0:
                 player.choose_anim(0, player.mirror)
             player.clear_move()
+            print(enemy.hp)
         if event.type == update_anims_enemy:
             enemies_group.update()
             if enemy.x_step == 0 and enemy.y_step == 0 and enemy.cur_anim_id not in [0,
