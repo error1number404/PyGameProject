@@ -1,0 +1,99 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "map/standart_map.tmx",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "Все файлы (*)",
+    "fileStates": {
+        "C:/Users/User/Desktop/Новая папка (2)/resources/level1.tmx": {
+            "scale": 0.466728855721393,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 803.4643570952699,
+                "y": 241.03930712858102
+            }
+        },
+        "C:/Users/User/Desktop/Новая папка (2)/resources/level1.tmx#main_lev_build": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/Новая папка (2)/resources/level1.tmx#tiles": {
+            "scaleInDock": 1
+        },
+        "C:/Users/User/Desktop/Новая папка (2)/resources/main_lev_build.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "default_map.tmx": {
+            "scale": 0.7817708333333333,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 473.28447701532315,
+                "y": 241.7588274483678
+            }
+        },
+        "default_map.tmx#background4a": {
+            "scaleInDock": 0.33
+        },
+        "default_map.tmx#other_and_decorative": {
+            "scaleInDock": 1
+        },
+        "main_lev_build.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "map/standart_map.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 504,
+                "y": 181.33333333333337
+            }
+        },
+        "map/tsx/background4a.tsx": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        },
+        "map/tsx/main_lev_build.tsx": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "map/tsx/other_and_decorative.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "map.height": 30,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 60,
+    "openFiles": [
+        "map/standart_map.tmx",
+        "map/tsx/background4a.tsx",
+        "map/tsx/main_lev_build.tsx",
+        "map/tsx/other_and_decorative.tsx"
+    ],
+    "project": "",
+    "property.type": "int",
+    "recentFiles": [
+        "map/tsx/other_and_decorative.tsx",
+        "map/tsx/main_lev_build.tsx",
+        "map/tsx/background4a.tsx",
+        "map/standart_map.tmx",
+        "default_map.tmx",
+        "main_lev_build.tsx",
+        "C:/Users/User/Desktop/Новая папка (2)/resources/level1.tmx",
+        "C:/Users/User/Desktop/Новая папка (2)/resources/main_lev_build.tsx"
+    ],
+    "tileset.embedInMap": false,
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    },
+    "tileset.transparentColor": "#ffffff",
+    "tileset.useTransparentColor": false
+}
