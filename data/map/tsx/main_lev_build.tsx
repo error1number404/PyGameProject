@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.4" tiledversion="1.4.3" name="main_lev_build" tilewidth="16" tileheight="16" tilecount="10240" columns="128">
- <image source="../../../tiles/FullPack/main_lev_build.png" trans="ff00ff" width="2048" height="1280"/>
+ <image source="../tiles/main_lev_build.png" width="2048" height="1280"/>
  <tile id="0">
   <properties>
    <property name="air" type="int" value="1"/>
@@ -37997,7 +37997,7 @@
   <properties>
    <property name="air" type="int" value="0"/>
    <property name="floor" type="int" value="1"/>
-   <property name="solid" type="int" value="2"/>
+   <property name="solid" type="int" value="1"/>
    <property name="wall" type="int" value="0"/>
   </properties>
  </tile>
@@ -38005,7 +38005,7 @@
   <properties>
    <property name="air" type="int" value="0"/>
    <property name="floor" type="int" value="1"/>
-   <property name="solid" type="int" value="2"/>
+   <property name="solid" type="int" value="1"/>
    <property name="wall" type="int" value="0"/>
   </properties>
  </tile>
@@ -38013,7 +38013,7 @@
   <properties>
    <property name="air" type="int" value="0"/>
    <property name="floor" type="int" value="1"/>
-   <property name="solid" type="int" value="2"/>
+   <property name="solid" type="int" value="1"/>
    <property name="wall" type="int" value="0"/>
   </properties>
  </tile>
@@ -38053,7 +38053,7 @@
   <properties>
    <property name="air" type="int" value="0"/>
    <property name="floor" type="int" value="1"/>
-   <property name="solid" type="int" value="2"/>
+   <property name="solid" type="int" value="1"/>
    <property name="wall" type="int" value="0"/>
   </properties>
  </tile>
@@ -38069,7 +38069,7 @@
   <properties>
    <property name="air" type="int" value="0"/>
    <property name="floor" type="int" value="1"/>
-   <property name="solid" type="int" value="2"/>
+   <property name="solid" type="int" value="1"/>
    <property name="wall" type="int" value="0"/>
   </properties>
  </tile>
@@ -38077,7 +38077,7 @@
   <properties>
    <property name="air" type="int" value="0"/>
    <property name="floor" type="int" value="1"/>
-   <property name="solid" type="int" value="2"/>
+   <property name="solid" type="int" value="1"/>
    <property name="wall" type="int" value="0"/>
   </properties>
  </tile>
@@ -38085,7 +38085,7 @@
   <properties>
    <property name="air" type="int" value="0"/>
    <property name="floor" type="int" value="1"/>
-   <property name="solid" type="int" value="2"/>
+   <property name="solid" type="int" value="1"/>
    <property name="wall" type="int" value="0"/>
   </properties>
  </tile>
@@ -39021,7 +39021,7 @@
   <properties>
    <property name="air" type="int" value="0"/>
    <property name="floor" type="int" value="1"/>
-   <property name="solid" type="int" value="2"/>
+   <property name="solid" type="int" value="1"/>
    <property name="wall" type="int" value="0"/>
   </properties>
  </tile>
@@ -39029,7 +39029,7 @@
   <properties>
    <property name="air" type="int" value="0"/>
    <property name="floor" type="int" value="1"/>
-   <property name="solid" type="int" value="2"/>
+   <property name="solid" type="int" value="1"/>
    <property name="wall" type="int" value="0"/>
   </properties>
  </tile>
@@ -39101,7 +39101,7 @@
   <properties>
    <property name="air" type="int" value="0"/>
    <property name="floor" type="int" value="1"/>
-   <property name="solid" type="int" value="2"/>
+   <property name="solid" type="int" value="1"/>
    <property name="wall" type="int" value="0"/>
   </properties>
  </tile>
@@ -39109,7 +39109,7 @@
   <properties>
    <property name="air" type="int" value="0"/>
    <property name="floor" type="int" value="1"/>
-   <property name="solid" type="int" value="2"/>
+   <property name="solid" type="int" value="1"/>
    <property name="wall" type="int" value="0"/>
   </properties>
  </tile>
