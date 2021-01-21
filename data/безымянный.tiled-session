@@ -46,22 +46,22 @@
         },
         "map/standart_map.tmx": {
             "scale": 0.75,
-            "selectedLayer": 3,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 504,
-                "y": 181.33333333333337
+                "x": 482.6666666666667,
+                "y": 136
             }
         },
         "map/tsx/background4a.tsx": {
-            "scaleInDock": 0.5,
-            "scaleInEditor": 1
+            "scaleInDock": 0.33,
+            "scaleInEditor": 1.5
         },
         "map/tsx/main_lev_build.tsx": {
             "scaleInDock": 1.5,
             "scaleInEditor": 1
         },
         "map/tsx/other_and_decorative.tsx": {
-            "scaleInDock": 1,
+            "scaleInDock": 0.75,
             "scaleInEditor": 1
         }
     },
@@ -77,7 +77,7 @@
         "map/tsx/other_and_decorative.tsx"
     ],
     "project": "",
-    "property.type": "int",
+    "property.type": "string",
     "recentFiles": [
         "map/tsx/other_and_decorative.tsx",
         "map/tsx/main_lev_build.tsx",
