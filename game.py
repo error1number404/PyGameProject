@@ -16,14 +16,49 @@ def load_image(name, colorkey=None):
     image = pygame.image.load(fullname)
     return image
 
+class game():
+    def __init__(self):
+        self.player = self.player = Hero('Hero', 400, 50, self)
+        self.enemies = []
+        self.levels = [[0] * 4 for i in range(4)]
+        self.cur_level_x = 2
+        self.cur_level_y = 2
+        self.isLevelChanging = False
+
+    def change_level(self, exit):
+        self.isLevelChanging = True
+        if exit == 1:
+            self.cur_level_y += 1
+            self.player.teleport_self(416,64)
+        elif exit == 2:
+            self.cur_level_y -= 1
+            self.player.teleport_self(416,340)
+        elif exit == 3:
+            self.cur_level_x -= 1
+            self.player.teleport_self(835, 374)
+        elif exit == 4:
+            self.cur_level_x += 1
+            self.player.teleport_self(0, 374)
+        self.player.update_cur_level()
+        self.levels[self.cur_level_x][self.cur_level_y].load_level()
+        self.levels[self.cur_level_x][self.cur_level_y].spawn_enemies()
+        self.isLevelChanging = False
+
 class level:
-    def __init__(self,filename):
-        self.map = pytmx.load_pygame(f'{filename}''.tmx')
-        self.height = self.map.height
-        self.width = self.map.width
-        self.tile_width = self.map.tilewidth
-        self.tile_height = self.map.tileheight
-        self.layers = []
+    def __init__(self,filename,player):
+        self.filename = filename
+        self.player = player
+        self.enemies = []
+        self.isLoaded = False
+
+    def load_level(self):
+        if not self.isLoaded:
+            self.map = pytmx.load_pygame(f'{self.filename}''.tmx')
+            self.height = self.map.height
+            self.width = self.map.width
+            self.tile_width = self.map.tilewidth
+            self.tile_height = self.map.tileheight
+            self.isLoaded = True
 
     def render(self, screen):
         for i in range(4):
@@ -34,11 +69,15 @@ class level:
                         image = image.convert_alpha()
                         screen.blit(image, (x * self.tile_width, y * self.tile_height))
 
-    def get_tile_id(self, position,layer):
-        return self.map.tiledgidmap[self.map.get_tile_gid(*position,layer)]
-
     def get_tile_properties(self,position,layer):
         return self.map.get_tile_properties(*position,layer)
+
+    def spawn_enemies(self):
+        for y in range(self.height):
+            for x in range(self.width):
+                if self.get_tile_properties((x,y),3)['spawner'] == 1:
+                    print((x * self.tile_width, y * self.tile_height))
+                    self.enemies.append(Enemy('Enemy_',x * self.tile_width - 4*16, y * self.tile_height-6*16,self,self.player))
 
 class HP(pygame.sprite.Sprite):
     def __init__(self, sheet, columns, rows, x, y, hp):
@@ -63,8 +102,10 @@ class HP(pygame.sprite.Sprite):
         self.rect = self.rect.move(x, y)
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, anims_folder_name, x, y):
+    def __init__(self, anims_folder_name, x, y, level, player):
         super().__init__(enemies_group)
+        self.level = level
+        self.player = player
         self.frames = []
         self.react = 0
         self.cur_frame = 0
@@ -98,9 +139,17 @@ class Enemy(pygame.sprite.Sprite):
             if self.mirror:
                 self.frames[i] = pygame.transform.flip(self.frames[i], True, False)
 
+    def idle_if_need(self):
+        if self.x_step == 0 and self.y_step == 0 and self.cur_anim_id not in [0,3] and self.cur_frame > 3 and self.crush is False and self.hp > 0:
+            self.choose_anim(0, self.mirror)
+
+    def play_dead_if_need(self):
+        if self.hp == 0 and self.cur_anim_id != 3:
+            self.choose_anim(3, self.mirror)
+
     def move(self, k=True,f=1):
         if k:
-            if self.cur_anim_id == 4 and level.get_tile_properties((self.x//16+4,self.y//16+6),2)['air'] == 1:
+            if self.cur_anim_id == 4 and self.level.get_tile_properties((self.x//16+4,self.y//16+6),2)['air'] == 1:
                 self.choose_anim(4)
                 self.x_step = 10 * f
             elif self.cur_anim_id != 1 or self.mirror is True:
@@ -109,7 +158,7 @@ class Enemy(pygame.sprite.Sprite):
             else:
                 self.x_step = 10 * f
         else:
-            if self.cur_anim_id == 4 and level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 6), 2)['air'] == 1:
+            if self.cur_anim_id == 4 and self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 6), 2)['air'] == 1:
                 self.choose_anim(4, True)
                 self.x_step = -10 * f
             elif self.cur_anim_id != 1 or self.mirror is False:
@@ -119,13 +168,13 @@ class Enemy(pygame.sprite.Sprite):
                 self.x_step = -10 * f
 
     def move_right(self):
-        if level.get_tile_properties((self.x // 16 + 6, self.y // 16 + 5), 2)['wall'] == 1:
+        if self.level.get_tile_properties((self.x // 16 + 6, self.y // 16 + 5), 2)['wall'] == 1:
             self.move(True, 0)
         elif self.cur_anim_id != 2:
             self.move()
 
     def move_left(self):
-        if level.get_tile_properties((self.x // 16 + 2, self.y // 16 + 5), 2)['wall'] == 1:
+        if self.level.get_tile_properties((self.x // 16 + 2, self.y // 16 + 5), 2)['wall'] == 1:
             self.move(False, 0)
         elif self.cur_anim_id != 2:
             self.move(False)
@@ -133,7 +182,7 @@ class Enemy(pygame.sprite.Sprite):
     def attack(self):
         if self.cur_anim_id != 2:
             self.choose_anim(2, self.mirror)
-            player.hp -= 1
+            self.player.hp -= 1
 
     def clear_move(self):
         self.y_step = 0
@@ -146,25 +195,25 @@ class Enemy(pygame.sprite.Sprite):
         else:
             self.cur_frame += 1
         self.image = self.frames[self.cur_frame % len(self.frames)]
-        if player.hp > 0 and self.hp > 0 and self.y // 16 + 4 > player.y // 16 and self.y // 16 - 4 < player.y // 16 and (self.x // 16 + 16 > player.x // 16 and self.x // 16 - 16 < player.x // 16):
+        if self.player.hp > 0 and self.hp > 0 and self.y // 16 + 4 > self.player.y // 16 and self.y // 16 - 4 < self.player.y // 16 and (self.x // 16 + 16 > self.player.x // 16 and self.x // 16 - 16 < self.player.x // 16):
             self.react += 1
-            if self.x // 16 + 1 > player.x // 16 and self.x // 16 - 1 < player.x // 16 and self.react // 15 > 0:
+            if self.x // 16 + 1 > self.player.x // 16 and self.x // 16 - 1 < self.player.x // 16 and self.react // 15 > 0:
                 self.attack()
                 self.react = 0
-            elif self.x // 16 + 1 > player.x // 16 and self.x // 16 - 1 < player.x // 16:
+            elif self.x // 16 + 1 > self.player.x // 16 and self.x // 16 - 1 < self.player.x // 16:
                 pass
-            elif self.x < player.x:
+            elif self.x < self.player.x:
                 self.move_right()
             else:
                 self.move_left()
-        if level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 6), 2)['air'] == 1 and self.crush:
+        if self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 6), 2)['air'] == 1 and self.crush:
             if self.cur_anim_id not in [2,4] or (self.cur_anim_id == 2 and self.cur_frame > 6):
                 if self.hp > 0:
                     self.choose_anim(4)
             self.y_step = 11
         else:
             self.crush = False
-        if self.crush is False and level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 6), 2)['air'] == 1:
+        if self.crush is False and self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 6), 2)['air'] == 1:
             self.crush = True
         self.hp_sprite[0].hp = 2 - self.hp
         self.hp_sprite[0].update(self.x_step,self.y_step)
@@ -173,8 +222,10 @@ class Enemy(pygame.sprite.Sprite):
         self.y += self.y_step
 
 class Hero(pygame.sprite.Sprite):
-    def __init__(self, anims_folder_name, x, y):
+    def __init__(self, anims_folder_name, x, y, game):
         super().__init__(player_group)
+        self.game = game
+        self.level = ''
         self.frames = []
         self.cur_frame = 0
         self.crush = True
@@ -194,6 +245,14 @@ class Hero(pygame.sprite.Sprite):
         self.hp_sprite = [HP(load_image('GUI/Heart.png'), 3, 1, 32, 16, 2),
                           HP(load_image('GUI/Heart.png'), 3, 1, 48, 16, 2)]
 
+    def update_cur_level(self):
+        self.level = self.game.levels[self.game.cur_level_x][self.game.cur_level_y]
+
+    def teleport_self(self,x,y):
+        self.rect = pygame.Rect(x, y, self.frames[0].get_width(), self.frames[0].get_height())
+        self.x = x
+        self.y = y
+
     def choose_anim(self,id,mirror=False):
         self.mirror = mirror
         self.frames = []
@@ -205,9 +264,17 @@ class Hero(pygame.sprite.Sprite):
             if self.mirror:
                 self.frames[i] = pygame.transform.flip(self.frames[i], True, False)
 
+    def idle_if_need(self):
+        if self.x_step == 0 and self.y_step == 0 and self.cur_anim_id not in [0,3] and self.cur_frame > 3 and self.crush is False and self.hp > 0:
+            self.choose_anim(0, self.mirror)
+
+    def play_dead_if_need(self):
+        if self.hp == 0 and self.cur_anim_id != 3:
+            self.choose_anim(3,self.mirror)
+
     def move(self, k=True,f=1):
         if k:
-            if self.cur_anim_id == 5 and level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 5), 2)['air'] == 1:
+            if self.cur_anim_id == 5 and self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 5), 2)['air'] == 1:
                 self.choose_anim(5)
                 self.x_step = 15 * f
             elif self.cur_anim_id != 1 or self.mirror is True:
@@ -216,7 +283,7 @@ class Hero(pygame.sprite.Sprite):
             else:
                 self.x_step = 15 * f
         else:
-            if self.cur_anim_id == 5 and level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 5), 2)['air'] == 1:
+            if self.cur_anim_id == 5 and self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 5), 2)['air'] == 1:
                 self.choose_anim(5, True)
                 self.x_step = -15 * f
             elif self.cur_anim_id != 1 or self.mirror is False:
@@ -226,13 +293,13 @@ class Hero(pygame.sprite.Sprite):
                 self.x_step = -15 * f
 
     def move_right(self):
-        if level.get_tile_properties((self.x // 16 + 6, self.y // 16 + 4), 2)['wall'] == 1:
+        if self.level.get_tile_properties((self.x // 16 + 6, self.y // 16 + 4), 2)['wall'] == 1:
             self.move(True, 0)
         elif self.cur_anim_id != 2:
             self.move()
 
     def move_left(self):
-        if level.get_tile_properties((self.x // 16 + 2, self.y // 16 + 4), 2)['wall'] == 1:
+        if self.level.get_tile_properties((self.x // 16 + 2, self.y // 16 + 4), 2)['wall'] == 1:
             self.move(False, 0)
         elif self.cur_anim_id != 2:
             self.move(False)
@@ -245,22 +312,32 @@ class Hero(pygame.sprite.Sprite):
             self.y_step = -30
 
     def jump_off(self):
-        if level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 5), 2)['solid'] == 2:
-            self.y_step = 10
+        if self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 6), 2)['exit'] == 1:
+            self.game.change_level(1)
+        elif self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 5), 2)['solid'] == 2:
+            self.y_step = 9
             self.choose_anim(4)
 
     def attack(self):
         if self.cur_anim_id != 2:
             self.choose_anim(2, self.mirror)
-            if self.y // 16 + 2 > enemy.y // 16 and self.y // 16 - 2 < enemy.y // 16:
-                if self.x // 16 +1 > enemy.x // 16 and self.x // 16 - 1 < enemy.x // 16:
-                    if enemy.hp != 0:
-                        enemy.hp -= 1
-
+            for enemy in self.level.enemies:
+                if enemy.hp != 0:
+                    if self.y // 16 + 2 > enemy.y // 16 and self.y // 16 - 2 < enemy.y // 16:
+                        if self.x // 16 +1 > enemy.x // 16 and self.x // 16 - 1 < enemy.x // 16:
+                            enemy.hp -= 1
 
     def clear_move(self):
         self.y_step = 0
         self.x_step = 0
+
+    def is_in_exit_tile(self):
+        if self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 5), 2)['exit'] != -1:
+            return self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 6), 2)['exit']
+        if self.level.get_tile_properties((self.x // 16 + 5, self.y // 16 + 4), 2)['exit'] != -1:
+            return self.level.get_tile_properties((self.x // 16 + 5, self.y // 16 + 4), 2)['exit']
+        elif self.level.get_tile_properties((self.x // 16 + 3, self.y // 16 + 4), 2)['exit'] != -1:
+            return self.level.get_tile_properties((self.x // 16 + 3, self.y // 16 + 4), 2)['exit']
 
     def update(self):
         if self.cur_anim_id == 3:
@@ -269,7 +346,7 @@ class Hero(pygame.sprite.Sprite):
         else:
             self.cur_frame += 1
         self.image = self.frames[self.cur_frame % len(self.frames)]
-        if level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 5), 2)['air'] == 1 and self.crush:
+        if self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 5), 2)['air'] == 1 and self.crush:
             if self.cur_anim_id not in [2,5] or (self.cur_anim_id == 2 and self.cur_frame > 6):
                 if self.hp > 0:
                     self.choose_anim(5)
@@ -281,7 +358,7 @@ class Hero(pygame.sprite.Sprite):
         if self.jumping > 0 and self.crush is False:
             self.jumping -= 1
             self.y_step = -30
-        elif self.jumping < 1 and self.crush is False and level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 5), 2)['air'] == 1:
+        elif self.jumping < 1 and self.crush is False and self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 5), 2)['air'] == 1:
             self.crush = True
         if self.hp > 2:
             if self.hp > 3:
@@ -303,54 +380,55 @@ class Hero(pygame.sprite.Sprite):
         self.rect = self.rect.move(self.x_step, self.y_step)
         self.x += self.x_step
         self.y += self.y_step
-
-
 size = width, height = 960, 480
 screen = pygame.display.set_mode(size)
 player_group = pygame.sprite.Group()
 enemies_group = pygame.sprite.Group()
 gui_group = pygame.sprite.Group()
 clock = pygame.time.Clock()
-player = Hero('Hero', 400, 50)
-enemy = Enemy('Enemy_',50,50)
+Game = game()
+Game.levels[2][2] = (level('data/map/standart_map',Game.player))
+Game.levels[3][2] = (level('data/map/standart_map',Game.player))
+Game.levels[1][2] = (level('data/map/standart_map',Game.player))
+Game.levels[2][3] = (level('data/map/standart_map',Game.player))
+Game.levels[2][1] = (level('data/map/standart_map',Game.player))
+Game.levels[2][2].load_level()
+Game.player.update_cur_level()
 running = True
 update_anims_player = pygame.USEREVENT + 1
 pygame.time.set_timer(update_anims_player, 60)
 update_anims_enemy = pygame.USEREVENT + 2
 pygame.time.set_timer(update_anims_enemy, 80)
 background = load_image('map/background1.png')
-level = level('data/map/standart_map')
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         if event.type == update_anims_player:
             player_group.update()
-            if player.x_step == 0 and player.y_step == 0 and player.cur_anim_id not in [0, 3] and player.cur_frame > 3 and player.crush is False and player.hp > 0:
-                player.choose_anim(0, player.mirror)
-            player.clear_move()
+            Game.player.idle_if_need()
+            Game.player.play_dead_if_need()
+            Game.player.clear_move()
         if event.type == update_anims_enemy:
             enemies_group.update()
-            if enemy.x_step == 0 and enemy.y_step == 0 and enemy.cur_anim_id not in [0,
-                                                                                     3] and enemy.cur_frame > 3 and enemy.crush is False and enemy.hp > 0:
-                enemy.choose_anim(0, enemy.mirror)
-            enemy.clear_move()
-        if player.hp == 0 and player.cur_anim_id != 3:
-            player.choose_anim(3,player.mirror)
-        if enemy.hp == 0 and enemy.cur_anim_id != 3:
-            enemy.choose_anim(3,enemy.mirror)
-        if pygame.key.get_pressed()[pygame.K_SPACE] and player.hp > 0:
-            player.jump()
-        if pygame.key.get_pressed()[pygame.K_RIGHT] and player.hp > 0:
-            player.move_right()
-        if pygame.key.get_pressed()[pygame.K_LEFT] and player.hp > 0:
-            player.move_left()
-        if pygame.key.get_pressed()[pygame.K_f] and player.hp > 0:
-            player.attack()
-        if pygame.key.get_pressed()[pygame.K_DOWN] and player.hp > 0:
-            player.jump_off()
+            for enemy in Game.levels[Game.cur_level_x][Game.cur_level_y].enemies:
+                enemy.idle_if_need()
+                enemy.play_dead_if_need()
+                enemy.clear_move()
+        if pygame.key.get_pressed()[pygame.K_SPACE] and Game.player.hp > 0:
+            Game.player.jump()
+        if pygame.key.get_pressed()[pygame.K_RIGHT] and Game.player.hp > 0:
+            Game.player.move_right()
+        if pygame.key.get_pressed()[pygame.K_LEFT] and Game.player.hp > 0:
+            Game.player.move_left()
+        if pygame.key.get_pressed()[pygame.K_f] and Game.player.hp > 0:
+            Game.player.attack()
+        if pygame.key.get_pressed()[pygame.K_DOWN] and Game.player.hp > 0:
+            Game.player.jump_off()
+    if Game.player.is_in_exit_tile() and not Game.isLevelChanging:
+        Game.change_level(Game.player.is_in_exit_tile())
     screen.blit(background,(0,0))
-    level.render(screen)
+    Game.levels[Game.cur_level_x][Game.cur_level_y].render(screen)
     player_group.draw(screen)
     enemies_group.draw(screen)
     gui_group.draw(screen)

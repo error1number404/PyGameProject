@@ -15,7 +15,7 @@
   <properties>
    <property name="air" type="int" value="1"/>
    <property name="celling" type="int" value="0"/>
-   <property name="exit" type="int" value="0"/>
+   <property name="exit" type="int" value="1"/>
    <property name="floor" type="int" value="0"/>
    <property name="solid" type="int" value="1"/>
    <property name="wall" type="int" value="0"/>
@@ -25,7 +25,7 @@
   <properties>
    <property name="air" type="int" value="1"/>
    <property name="celling" type="int" value="0"/>
-   <property name="exit" type="int" value="1"/>
+   <property name="exit" type="int" value="2"/>
    <property name="floor" type="int" value="0"/>
    <property name="solid" type="int" value="1"/>
    <property name="wall" type="int" value="0"/>
@@ -35,7 +35,7 @@
   <properties>
    <property name="air" type="int" value="1"/>
    <property name="celling" type="int" value="0"/>
-   <property name="exit" type="int" value="2"/>
+   <property name="exit" type="int" value="3"/>
    <property name="floor" type="int" value="0"/>
    <property name="solid" type="int" value="1"/>
    <property name="wall" type="int" value="0"/>
@@ -45,7 +45,7 @@
   <properties>
    <property name="air" type="int" value="1"/>
    <property name="celling" type="int" value="0"/>
-   <property name="exit" type="int" value="3"/>
+   <property name="exit" type="int" value="4"/>
    <property name="floor" type="int" value="0"/>
    <property name="solid" type="int" value="1"/>
    <property name="wall" type="int" value="0"/>
@@ -57758,7 +57758,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5776">
@@ -57768,7 +57768,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5777">
@@ -57778,7 +57778,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5778">
@@ -57788,7 +57788,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5779">
@@ -57798,7 +57798,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5780">
@@ -57808,7 +57808,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5781">
@@ -57818,7 +57818,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5782">
@@ -57828,7 +57828,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5783">
@@ -57838,7 +57838,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5784">
@@ -57848,7 +57848,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5785">
@@ -57858,7 +57858,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5786">
@@ -57868,7 +57868,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5787">
@@ -57878,7 +57878,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5788">
@@ -57888,7 +57888,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5789">
@@ -59038,7 +59038,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5904">
@@ -59048,7 +59048,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5905">
@@ -59058,7 +59058,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5906">
@@ -59068,7 +59068,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5907">
@@ -59078,7 +59078,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5908">
@@ -59088,7 +59088,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5909">
@@ -59098,7 +59098,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5910">
@@ -59108,7 +59108,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5911">
@@ -59118,7 +59118,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5912">
@@ -59128,7 +59128,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5913">
@@ -59138,7 +59138,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5914">
@@ -59148,7 +59148,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5915">
@@ -59158,7 +59158,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5916">
@@ -59168,7 +59168,7 @@
    <property name="exit" type="int" value="-1"/>
    <property name="floor" type="int" value="1"/>
    <property name="solid" type="int" value="1"/>
-   <property name="wall" type="int" value="0"/>
+   <property name="wall" type="int" value="1"/>
   </properties>
  </tile>
  <tile id="5917">
