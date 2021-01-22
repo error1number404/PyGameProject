@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "map/standart_map.tmx",
+    "activeFile": "map/1011_0.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "Все файлы (*)",
@@ -44,12 +44,68 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
-        "map/standart_map.tmx": {
-            "scale": 0.75,
+        "map/0011_0.tmx": {
+            "scale": 0.8127561475409836,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 482.6666666666667,
-                "y": 136
+                "x": 489.07658367475574,
+                "y": 394.9524109675385
+            }
+        },
+        "map/0101_0.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 712.6666666666665,
+                "y": 422.6666666666667
+            }
+        },
+        "map/0111_0.tmx": {
+            "scale": 0.8263020833333332,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 482.269145918689,
+                "y": 407.84115978569184
+            }
+        },
+        "map/1011_0.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 482.5,
+                "y": 252
+            }
+        },
+        "map/1100_0.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 472.6666666666667,
+                "y": 240
+            }
+        },
+        "map/1101_0.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 480.6666666666666,
+                "y": 241.33333333333337
+            }
+        },
+        "map/1111_0.tmx": {
+            "scale": 0.8127561475409836,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 473.0816262212417,
+                "y": 238.6939804601323
+            }
+        },
+        "map/standart_map.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 480,
+                "y": 239
             }
         },
         "map/tsx/background4a.tsx": {
@@ -57,12 +113,83 @@
             "scaleInEditor": 1.5
         },
         "map/tsx/main_lev_build.tsx": {
-            "scaleInDock": 1.5,
-            "scaleInEditor": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1.5
         },
         "map/tsx/other_and_decorative.tsx": {
-            "scaleInDock": 0.75,
-            "scaleInEditor": 1
+            "scaleInDock": 1.5,
+            "scaleInEditor": 0.75
+        },
+        "map/Новая папка/0011_0.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 483.3333333333333,
+                "y": 252
+            }
+        },
+        "map/Новая папка/0101_0.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 512.6666666666665,
+                "y": 132
+            }
+        },
+        "map/Новая папка/0111_0.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 532.6666666666665,
+                "y": 149.33333333333337
+            }
+        },
+        "map/Новая папка/1011_0.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 502,
+                "y": 369.33333333333337
+            }
+        },
+        "map/Новая папка/1100_0.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 512.6666666666665,
+                "y": 302.6666666666667
+            }
+        },
+        "map/Новая папка/1101_0.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 487.5,
+                "y": 232
+            }
+        },
+        "map/Новая папка/1111_0.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 446,
+                "y": 248
+            }
+        },
+        "map/Новая папка/tsx/background4a.tsx": {
+            "scaleInDock": 1
+        },
+        "map/Новая папка/tsx/main_lev_build.tsx": {
+            "scaleInDock": 1
+        },
+        "map/Новая папка/tsx/other_and_decorative.tsx": {
+            "scaleInDock": 1
+        },
+        "tsx/main_lev_build.tsx": {
+            "scaleInDock": 1
+        },
+        "tsx/other_and_decorative.tsx": {
+            "scaleInDock": 1
         }
     },
     "map.height": 30,
@@ -71,22 +198,29 @@
     "map.tileWidth": 16,
     "map.width": 60,
     "openFiles": [
-        "map/standart_map.tmx",
-        "map/tsx/background4a.tsx",
-        "map/tsx/main_lev_build.tsx",
-        "map/tsx/other_and_decorative.tsx"
+        "map/1011_0.tmx",
+        "map/1100_0.tmx",
+        "map/1101_0.tmx",
+        "map/1111_0.tmx",
+        "map/0011_0.tmx",
+        "map/0101_0.tmx",
+        "map/0111_0.tmx"
     ],
     "project": "",
     "property.type": "string",
     "recentFiles": [
-        "map/tsx/other_and_decorative.tsx",
-        "map/tsx/main_lev_build.tsx",
-        "map/tsx/background4a.tsx",
+        "map/0111_0.tmx",
+        "map/0101_0.tmx",
+        "map/0011_0.tmx",
+        "map/1111_0.tmx",
+        "map/1101_0.tmx",
+        "map/1100_0.tmx",
+        "map/1011_0.tmx",
         "map/standart_map.tmx",
-        "default_map.tmx",
-        "main_lev_build.tsx",
-        "C:/Users/User/Desktop/Новая папка (2)/resources/level1.tmx",
-        "C:/Users/User/Desktop/Новая папка (2)/resources/main_lev_build.tsx"
+        "map/tsx/background4a.tsx",
+        "map/tsx/main_lev_build.tsx",
+        "map/Новая папка/0111_0.tmx",
+        "map/Новая папка/0101_0.tmx"
     ],
     "tileset.embedInMap": false,
     "tileset.lastUsedFormat": "tsx",
