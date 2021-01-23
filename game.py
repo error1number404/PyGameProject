@@ -35,10 +35,30 @@ class game():
         for x in range(len(self.levels)):
             for y in range(len(self.levels[0])):
                 if self.levels[x][y] is not None:
-                    self.levels[x][y] = level('data/map/'+''.join(self.levels[x][y])+'_'+str(random.randint(0,2)),self.player)
+                    self.levels[x][y] = level('data/map/'+''.join(list(map(lambda x: str(x),self.levels[x][y])))+'_0',self.player)
+        self.cur_level_x = random.randint(0, 6)
+        self.cur_level_y = random.randint(0, 6)
+        while self.levels[self.cur_level_x][self.cur_level_y] is None:
+            self.cur_level_x = random.randint(0, 6)
+            self.cur_level_y = random.randint(0, 6)
         self.player.update_cur_level()
         self.levels[self.cur_level_x][self.cur_level_y].load_level()
         self.levels[self.cur_level_x][self.cur_level_y].spawn_enemies()
+        x = random.randint(0,59)
+        y = random.randint(0,29)
+        exit = self.levels[self.cur_level_x][self.cur_level_y].get_tile_properties((x,y),2)['exit']
+        while exit == -1:
+            exit = self.levels[self.cur_level_x][self.cur_level_y].get_tile_properties((x,y),2)['exit']
+            x = random.randint(0, 59)
+            y = random.randint(0, 29)
+        if exit == 2:
+            self.player.teleport_self(416,36)
+        elif exit == 1:
+            self.player.teleport_self(416,340)
+        elif exit == 4:
+            self.player.teleport_self(835, 372)
+        elif exit == 3:
+            self.player.teleport_self(0, 372)
 
     def place_room(self):
         vacant_places = [[None] * 7 for i in range(7)]
@@ -170,7 +190,7 @@ class level:
                 for x in range(self.width):
                     try:
                         if self.get_tile_properties((x,y),3)['spawner'] == 1:
-                            self.enemies.append(Enemy('Enemy_',x * self.tile_width - 2*16, y * self.tile_height-6*16,self,self.player))
+                            self.enemies.append(Enemy('Enemy_',x * self.tile_width - 2*16, y * self.tile_height-5*16,self,self.player))
                     except BaseException:
                         pass
             self.isSpawned = True
@@ -288,13 +308,14 @@ class Enemy(pygame.sprite.Sprite):
         self.level = level
         self.reactToAfk = [0,False]
         self.player = player
+        self.invincibleTime = 0
         self.frames = []
         self.react = 0
         self.is_dead_for = 0
         self.cur_frame = 0
         self.showHitTime = 0
         self.knockback_time = 0
-        self.knockback_direction = 1
+        self.knockback_direction = [1,1]
         self.crush = True
         self.mirror = False
         self.isUnstaking = False
@@ -313,7 +334,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = pygame.Rect(0, 0, self.frames[0].get_width(), self.frames[0].get_height())
         self.rect = self.rect.move(x, y)
         self.image = self.frames[self.cur_frame]
-        self.hp_sprite = [HP(load_image('GUI/Heart.png'), 3, 1, self.x, self.y, 2,self.level.gui_group)]
+        self.hp_sprite = [HP(load_image('GUI/Heart.png'), 3, 1, self.x + 40, self.y, 2,self.level.gui_group)]
 
     def choose_anim(self,id,mirror=False):
         self.mirror = mirror
@@ -418,9 +439,9 @@ class Enemy(pygame.sprite.Sprite):
                 except BaseException:
                     way_is_clear = False
             if way_is_clear:
-                self.knockback_direction = 1
+                self.knockback_direction[0] = 1
             else:
-                self.knockback_direction = 0
+                self.knockback_direction[0] = 0
         else:
             for tile_in_way in range(1,self.knockback_time + 1):
                 try:
@@ -431,9 +452,35 @@ class Enemy(pygame.sprite.Sprite):
                 except BaseException:
                     way_is_clear = False
             if way_is_clear:
-                self.knockback_direction = -1
+                self.knockback_direction[0] = -1
             else:
-                self.knockback_direction = 0
+                self.knockback_direction[0] = 0
+        way_is_clear = True
+        for tile_in_way in range(1, self.knockback_time + 1):
+            try:
+                if self.level.get_tile_properties((self.x // 16 + 3, self.y // 16 + 5  - tile_in_way), 2)[
+                    'celling'] == 1 or (
+                        not self.level.isCleared and
+                        self.level.get_tile_properties((self.x // 16 + 3, self.y // 16 + 5 - tile_in_way), 4)[
+                            'celling'] == 1):
+                    way_is_clear = False
+            except BaseException:
+                way_is_clear = False
+        if way_is_clear:
+            self.knockback_direction[0] = -1
+        else:
+            self.knockback_direction[0] = 0
+
+    def colide_trap(self):
+        try:
+            if self.hp > 0:
+                for y in range(2):
+                    if self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 5 - y),3)['trap'] == 1:
+                        self.invincibleTime = 30
+                        self.hp -= 1
+                        self.knockback(2,self.mirror)
+        except BaseException:
+            pass
 
     def drop_items(self):
         if random.randint(0, 10) > -1:
@@ -458,9 +505,13 @@ class Enemy(pygame.sprite.Sprite):
             self.cur_frame += 1
         self.image = self.frames[self.cur_frame % len(self.frames)]
         self.draw_effects()
+        if self.invincibleTime != 0:
+            self.invincibleTime -= 1
+        else:
+            self.colide_trap()
         if self.knockback_time != 0:
-            self.x_step = 16 * self.knockback_direction
-            self.y_step = -16 * abs(self.knockback_direction)
+            self.x_step = 16 * self.knockback_direction[0]
+            self.y_step = -16 * abs(self.knockback_direction[1])
             self.knockback_time -= 1
         if self.player.hp > 0 and self.hp > 0 and self.y // 16 + 4 > self.player.y // 16 and self.y // 16 - 4 < self.player.y // 16 and (self.x // 16 + 16 > self.player.x // 16 and self.x // 16 - 16 < self.player.x // 16):
             self.react += 1
@@ -517,7 +568,7 @@ class Hero(pygame.sprite.Sprite):
         self.mirror = False
         self.invincibleTime = 0
         self.knockback_time = 0
-        self.knockback_direction = 1
+        self.knockback_direction = [1,1]
         self.hp = 4
         self.x_step, self.y_step = 0, 0
         self.x, self.y = x, y
@@ -616,14 +667,14 @@ class Hero(pygame.sprite.Sprite):
                         pass
                     else:
                         way_is_clear = False
-                        self.jumping = tile_in_way // 2 - 3
+                        self.jumping = tile_in_way // 2 - 2
                 except BaseException:
                     way_is_clear = False
-                    if self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 4 - tile_in_way + 4), 2)[
-                        'exit'] != -1 and self.level.isCleared:
-                        self.jumping = tile_in_way // 2
-                    else:
-                        self.jumping = tile_in_way // 2 - 3
+                    try:
+                        if self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 4 - tile_in_way + 2),2)['exit'] != -1 and self.level.isCleared:
+                            self.jumping = tile_in_way // 2
+                    except BaseException:
+                        self.jumping = tile_in_way // 2 - 2
             if way_is_clear:
                 self.choose_anim(4,self.mirror)
                 self.crush = True
@@ -681,9 +732,9 @@ class Hero(pygame.sprite.Sprite):
                 except BaseException:
                     way_is_clear = False
             if way_is_clear:
-                self.knockback_direction = 1
+                self.knockback_direction[0] = 1
             else:
-                self.knockback_direction = 0
+                self.knockback_direction[0] = 0
         else:
             for tile_in_way in range(1,self.knockback_time + 1):
                 try:
@@ -694,18 +745,48 @@ class Hero(pygame.sprite.Sprite):
                 except BaseException:
                     way_is_clear = False
             if way_is_clear:
-                self.knockback_direction = -1
+                self.knockback_direction[0] = -1
             else:
-                self.knockback_direction = 0
+                self.knockback_direction[0] = 0
+        way_is_clear = True
+        for tile_in_way in range(1, self.knockback_time + 1):
+            try:
+                if self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 4 - tile_in_way), 2)[
+                    'celling'] == 1 or (
+                        not self.level.isCleared and
+                        self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 4  - tile_in_way), 4)[
+                            'celling'] == 1):
+                    way_is_clear = False
+            except BaseException:
+                way_is_clear = False
+        if way_is_clear:
+            self.knockback_direction[1] = 2
+        else:
+            self.knockback_direction[1] = 0
+
+    def colide_trap(self):
+        try:
+            if self.hp > 0:
+                for y in range(4):
+                    if self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 4 - y),3)['trap'] == 1:
+                        self.invincibleTime = 30
+                        self.hp -= 1
+                        self.knockback(2,self.mirror)
+        except BaseException:
+            pass
 
     def is_in_exit_tile(self):
         if self.level.isCleared:
-            if self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 5), 2)['exit'] != -1:
-                return self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 6), 2)['exit']
-            if self.level.get_tile_properties((self.x // 16 + 5, self.y // 16 + 4), 2)['exit'] != -1:
-                return self.level.get_tile_properties((self.x // 16 + 5, self.y // 16 + 4), 2)['exit']
-            elif self.level.get_tile_properties((self.x // 16 + 3, self.y // 16 + 4), 2)['exit'] != -1:
-                return self.level.get_tile_properties((self.x // 16 + 3, self.y // 16 + 4), 2)['exit']
+            try:
+                for tile_in_way in range(2):
+                    if self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 5 - tile_in_way), 2)['exit'] != -1:
+                        return self.level.get_tile_properties((self.x // 16 + 4, self.y // 16 + 6 - tile_in_way), 2)['exit']
+                    if self.level.get_tile_properties((self.x // 16 + 5, self.y // 16 + 4 - tile_in_way), 2)['exit'] != -1:
+                        return self.level.get_tile_properties((self.x // 16 + 5, self.y // 16 + 4 - tile_in_way), 2)['exit']
+                    elif self.level.get_tile_properties((self.x // 16 + 3, self.y // 16 + 4 - tile_in_way), 2)['exit'] != -1:
+                        return self.level.get_tile_properties((self.x // 16 + 3, self.y // 16 + 4 - tile_in_way), 2)['exit']
+            except BaseException:
+                pass
 
     def draw_effects(self):
         if self.showHitTime != 0 and self.cur_anim_id != 3:
@@ -727,9 +808,11 @@ class Hero(pygame.sprite.Sprite):
             self.cur_frame += 1
         if self.invincibleTime != 0:
             self.invincibleTime -= 1
+        else:
+            self.colide_trap()
         if self.knockback_time != 0:
-            self.x_step = 16 * self.knockback_direction
-            self.y_step = -16 * abs(self.knockback_direction)
+            self.x_step = 16 * self.knockback_direction[0]
+            self.y_step = -16 * abs(self.knockback_direction[1])
             self.knockback_time -= 1
         self.pickup_drop()
         self.image = self.frames[self.cur_frame % len(self.frames)]
@@ -776,17 +859,7 @@ enemies_group = pygame.sprite.Group()
 player_gui_group = pygame.sprite.Group()
 clock = pygame.time.Clock()
 Game = game()
-Game.levels[2][2] = (level('data/map/1011_0',Game.player))
-Game.levels[3][2] = (level('data/map/0101_0',Game.player))
-Game.levels[1][2] = (level('data/map/standart_map',Game.player))
-Game.levels[2][3] = (level('data/map/standart_map',Game.player))
-Game.levels[2][1] = (level('data/map/standart_map',Game.player))
-Game.cur_level_y = 2
-Game.cur_level_x = 2
-Game.levels[2][2].load_level()
-Game.levels[2][2].spawn_enemies()
-Game.player.update_cur_level()
-#Game.generate_map()
+Game.generate_map()
 running = True
 update_anims_player = pygame.USEREVENT + 1
 pygame.time.set_timer(update_anims_player, 60)
