@@ -3,11 +3,28 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "map/minimap/0110_empty.tmx",
+    "activeFile": "map/0111_0.tmx",
     "expandedProjectPaths": [
     ],
+    "exportAsImage.useCurrentScale": false,
     "file.lastUsedOpenFilter": "Все файлы (*)",
     "fileStates": {
+        "C:/Users/User/Desktop/test/main_lev_build.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "C:/Users/User/Desktop/test/the-perfect-palette-20-8x.tsx": {
+            "scaleInDock": 5.5,
+            "scaleInEditor": 1
+        },
+        "C:/Users/User/Desktop/test/безымянный.tmx": {
+            "scale": 5.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 55.54545454545455,
+                "y": 38.36363636363637
+            }
+        },
         "C:/Users/User/Desktop/Новая папка (2)/resources/level1.tmx": {
             "scale": 0.466728855721393,
             "selectedLayer": 1,
@@ -86,18 +103,18 @@
         },
         "map/0110_0.tmx": {
             "scale": 1,
-            "selectedLayer": 2,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 471.5,
-                "y": 240
+                "x": 435.5,
+                "y": 239
             }
         },
         "map/0111_0.tmx": {
             "scale": 0.8263020833333332,
-            "selectedLayer": 0,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 479.84872360542084,
-                "y": 240.22691459186893
+                "x": 482.269145918689,
+                "y": 242.04223132682012
             }
         },
         "map/1000_0.tmx": {
@@ -164,6 +181,46 @@
                 "y": 241.15474314528842
             }
         },
+        "map/minimap/0001_empty.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.141821619918062,
+                "y": 15.127639457926257
+            }
+        },
+        "map/minimap/0010_empty.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.066183422628434,
+                "y": 15.052001260636626
+            }
+        },
+        "map/minimap/0011_empty.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.066183422628434,
+                "y": 15.052001260636626
+            }
+        },
+        "map/minimap/0100_empty.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.066183422628434,
+                "y": 15.052001260636626
+            }
+        },
+        "map/minimap/0101_empty.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.066183422628434,
+                "y": 15.052001260636626
+            }
+        },
         "map/minimap/0110.tmx": {
             "scale": 11,
             "selectedLayer": 0,
@@ -172,7 +229,39 @@
                 "y": 20.36363636363636
             }
         },
+        "map/minimap/0110_empty — копия.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.066183422628434,
+                "y": 15.052001260636626
+            }
+        },
         "map/minimap/0110_empty.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.066183422628434,
+                "y": 15.052001260636626
+            }
+        },
+        "map/minimap/0111_empty.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 29.990545225338803,
+                "y": 15.014182161991808
+            }
+        },
+        "map/minimap/1000_empty.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.066183422628434,
+                "y": 15.052001260636626
+            }
+        },
+        "map/minimap/1001_empty.tmx": {
             "scale": 13.220833333333331,
             "selectedLayer": 0,
             "viewCenter": {
@@ -180,8 +269,76 @@
                 "y": 15.127639457926257
             }
         },
+        "map/minimap/1010_empty.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.141821619918062,
+                "y": 15.127639457926257
+            }
+        },
+        "map/minimap/1011_empty.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.141821619918062,
+                "y": 15.27891585250552
+            }
+        },
+        "map/minimap/1100_empty.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.141821619918062,
+                "y": 15.127639457926257
+            }
+        },
+        "map/minimap/1101_empty.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.141821619918062,
+                "y": 15.127639457926257
+            }
+        },
+        "map/minimap/1110_empty.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.141821619918062,
+                "y": 15.203277655215889
+            }
+        },
+        "map/minimap/1111_empty.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.141821619918062,
+                "y": 15.27891585250552
+            }
+        },
+        "map/minimap/test.tmx": {
+            "scale": 13.916666666666666,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 27.556886227544908,
+                "y": 13.005988023952096
+            }
+        },
+        "map/minimap/test/the-perfect-palette-20-8x.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "map/minimap/test/безымянный.tmx": {
+            "scale": 3.2510245901639343,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 118.27040655531043,
+                "y": 59.67349511503308
+            }
+        },
         "map/minimap/tsx/palette.tsx": {
-            "scaleInDock": 5.5,
+            "scaleInDock": 11,
             "scaleInEditor": 11
         },
         "map/standart_map.tmx": {
@@ -197,8 +354,8 @@
             "scaleInEditor": 1.5
         },
         "map/tsx/main_lev_build.tsx": {
-            "scaleInDock": 1,
-            "scaleInEditor": 1.5
+            "scaleInDock": 1.5,
+            "scaleInEditor": 0.75
         },
         "map/tsx/other_and_decorative.tsx": {
             "scaleInDock": 1.5,
@@ -276,37 +433,38 @@
             "scaleInDock": 1
         }
     },
-    "map.height": 30,
+    "map.height": 104,
     "map.lastUsedFormat": "tmx",
     "map.layerDataFormat": null,
-    "map.tileHeight": 1,
-    "map.tileWidth": 1,
-    "map.width": 60,
+    "map.tileHeight": 4,
+    "map.tileWidth": 4,
+    "map.width": 224,
     "openFiles": [
-        "map/minimap/tsx/palette.tsx",
-        "map/minimap/0110_empty.tmx"
+        "map/minimap/0111_empty.tmx",
+        "map/minimap/1011_empty.tmx",
+        "map/0111_0.tmx"
     ],
     "project": "",
     "property.type": "string",
     "recentFiles": [
-        "map/minimap/tsx/palette.tsx",
-        "map/minimap/0110_empty.tmx",
-        "map/0110_0.tmx",
-        "map/minimap/0110.tmx",
+        "C:/Users/User/Desktop/test/безымянный.tmx",
+        "map/minimap/0111_empty.tmx",
+        "map/minimap/1011_empty.tmx",
         "map/0111_0.tmx",
-        "map/0101_0.tmx",
-        "map/0100_0.tmx",
-        "map/0011_0.tmx",
-        "map/0010_0.tmx",
-        "map/0001_0.tmx",
-        "map/1111_0.tmx",
-        "map/1110_0.tmx"
+        "C:/Users/User/Desktop/test/the-perfect-palette-20-8x.tsx",
+        "C:/Users/User/Desktop/test/main_lev_build.tsx",
+        "map/minimap/1010_empty.tmx",
+        "map/minimap/1100_empty.tmx",
+        "map/minimap/1101_empty.tmx",
+        "map/minimap/1110_empty.tmx",
+        "map/minimap/1111_empty.tmx",
+        "map/minimap/0001_empty.tmx"
     ],
     "tileset.embedInMap": false,
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 1,
-        "width": 1
+        "height": 4,
+        "width": 4
     },
     "tileset.transparentColor": "#ffffff",
     "tileset.useTransparentColor": false

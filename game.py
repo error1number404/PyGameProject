@@ -22,27 +22,20 @@ class game():
         self.player = self.player = Hero('Hero', 16, 372, self)
         self.enemies = []
         self.levels = [[None] * 7 for i in range(7)]
-        self.cur_level_x = 3
-        self.cur_level_y = 3
+        self.cur_level_x = random.randint(0, 6)
+        self.cur_level_y = random.randint(0, 6)
         self.isLevelChanging = False
+        self.MapIsOpen = False
 
     def generate_map(self):
-        startroom = [random.choice([0, 1]) for i in range(4)]
-        while startroom == [0, 0, 0, 0]:
-            startroom = [random.choice([0, 1]) for i in range(4)]
-        self.levels[self.cur_level_x][self.cur_level_y] = startroom
-        for coun in range(random.randint(16, 40)):
+        self.levels[self.cur_level_x][self.cur_level_y] = [0] * 4
+        for coun in range(random.randint(16, 25)):
             self.place_room()
         for x in range(len(self.levels)):
             for y in range(len(self.levels[0])):
                 if self.levels[x][y] is not None:
-                    self.levels[x][y] = level(
-                        'data/map/' + ''.join(list(map(lambda x: str(x), self.levels[x][y]))) + '_0', self.player)
-        self.cur_level_x = random.randint(0, 6)
-        self.cur_level_y = random.randint(0, 6)
-        while self.levels[self.cur_level_x][self.cur_level_y] is None:
-            self.cur_level_x = random.randint(0, 6)
-            self.cur_level_y = random.randint(0, 6)
+                    self.levels[x][y] = level(f'data/map/{"".join(list(map(lambda x: str(x), self.levels[x][y])))}_0',
+                                              self.player)
         self.player.update_cur_level()
         self.levels[self.cur_level_x][self.cur_level_y].load_level()
         self.levels[self.cur_level_x][self.cur_level_y].spawn_enemies()
@@ -79,7 +72,8 @@ class game():
         while vacant_places[picked_room[0]][picked_room[1]] != 'Placed':
             picked_room = [random.randint(0, len(self.levels) - 1), random.randint(0, len(self.levels[0]) - 1)]
         self.levels[picked_room[0]][picked_room[1]] = [0] * 4
-        self.choose_type(self.levels[picked_room[0]][picked_room[1]], picked_room[0], picked_room[1])
+        while not self.choose_type(self.levels[picked_room[0]][picked_room[1]], picked_room[0], picked_room[1]):
+            pass
 
     def choose_type(self, room, x, y):
         neighbours = [0] * 4
@@ -110,6 +104,52 @@ class game():
             self.levels[x][y][ind] = 1
         return True
 
+    def load_minimap(self, screen):
+        if not self.MapIsOpen:
+            minimap = self.load_piece_of_minimap(self.cur_level_x, self.cur_level_y, 120, 60, -30, -15)
+            minimap.blit(load_image('hero/hat.png'), (52, 20))
+            screen.blit(minimap, (820, 20))
+        else:
+            minimap = pygame.Surface((880, 400))
+            for x in range(len(self.levels)):
+                for y in range(len(self.levels[0])):
+                    if self.levels[x][y] is not None and self.levels[x][y].isLoaded:
+                        minimap.blit(self.load_piece_of_minimap(x, y, 180, 90), (15 + (x - 1) * 60, 15 + (y - 1) * 30))
+            minimap.blit(load_image('hero/hat.png'), (37 + self.cur_level_x * 60, 20 + self.cur_level_y * 30))
+            screen.blit(minimap, (40, 40))
+
+    def load_piece_of_minimap(self, room_x, room_y, surface_width, surface_height, offset_x=0, offset_y=0):
+        minimap = pygame.Surface((surface_width, surface_height))
+        x_pos = [room_x - 1, room_x, room_x + 1]
+        y_pos = [room_y - 1, room_y, room_y + 1]
+        minimap.blit(load_image(f'map/minimap/png/{self.levels[room_x][room_y].type}_empty.png'),
+                     (offset_x + 60 * x_pos.index(room_x), offset_y + 30 * y_pos.index(room_y)))
+        if self.levels[room_x][room_y].type[0] == '1':
+            minimap.blit(load_image(f'map/minimap/png/{self.levels[room_x - 1][room_y].type}_empty.png'),
+                         (offset_x + 60 * x_pos.index(room_x - 1), offset_y + 30 * y_pos.index(room_y)))
+            if not self.levels[room_x - 1][room_y].isLoaded:
+                minimap.blit(load_image(f'map/minimap/png/not_visited.png'),
+                             (offset_x + 2 + 60 * x_pos.index(room_x - 1), offset_y + 2 + 30 * y_pos.index(room_y)))
+        if self.levels[room_x][room_y].type[1] == '1':
+            minimap.blit(load_image(f'map/minimap/png/{self.levels[room_x][room_y + 1].type}_empty.png'),
+                         (offset_x + 60 * x_pos.index(room_x), offset_y + 30 * y_pos.index(room_y + 1)))
+            if not self.levels[room_x][room_y + 1].isLoaded:
+                minimap.blit(load_image(f'map/minimap/png/not_visited.png'),
+                             (offset_x + 2 + 60 * x_pos.index(room_x), offset_y + 2 + 30 * y_pos.index(room_y + 1)))
+        if self.levels[room_x][room_y].type[2] == '1':
+            minimap.blit(load_image(f'map/minimap/png/{self.levels[room_x][room_y - 1].type}_empty.png'),
+                         (offset_x + 60 * x_pos.index(room_x), offset_y + 30 * y_pos.index(room_y - 1)))
+            if not self.levels[room_x][room_y - 1].isLoaded:
+                minimap.blit(load_image(f'map/minimap/png/not_visited.png'),
+                             (offset_x + 2 + 60 * x_pos.index(room_x), offset_y + 2 + 30 * y_pos.index(room_y - 1)))
+        if self.levels[room_x][room_y].type[3] == '1':
+            minimap.blit(load_image(f'map/minimap/png/{self.levels[room_x + 1][room_y].type}_empty.png'),
+                         (offset_x + 60 * x_pos.index(room_x + 1), offset_y + 30 * y_pos.index(room_y)))
+            if not self.levels[room_x + 1][room_y].isLoaded:
+                minimap.blit(load_image(f'map/minimap/png/not_visited.png'),
+                             (offset_x + 2 + 60 * x_pos.index(room_x + 1), offset_y + 2 + 30 * y_pos.index(room_y)))
+        return minimap
+
     def change_level(self, exit):
         self.isLevelChanging = True
         if exit == 1:
@@ -132,7 +172,7 @@ class game():
 
 
 class level:
-    def __init__(self, filename, player, type='0000'):
+    def __init__(self, filename, player):
         self.filename = filename
         self.player = player
         self.enemies = []
@@ -142,7 +182,7 @@ class level:
         self.enemies_group = pygame.sprite.Group()
         self.gui_group = pygame.sprite.Group()
         self.drop = []
-        self.type = type
+        self.type = self.filename.split('/')[2][:4]
 
     def load_level(self):
         if not self.isLoaded:
@@ -499,6 +539,7 @@ class Enemy(pygame.sprite.Sprite):
                 for y in range(2):
                     if self.level.get_tile_properties((self.x // 16, self.y // 16 - y), 3)['trap'] == 1:
                         self.invincibleTime = 30
+                        self.showHitTime = 6
                         self.hp -= 1
                         self.knockback(2, self.mirror)
         except BaseException:
@@ -695,7 +736,7 @@ class Hero(pygame.sprite.Sprite):
                 try:
                     if self.level.get_tile_properties((self.x // 16, self.y // 16 - tile_in_way), 2)['solid'] != 1 and (
                             self.level.isCleared or (not self.level.isCleared and self.level.get_tile_properties(
-                            (self.x // 16, self.y // 16 - tile_in_way), 4)['solid'] != 1)):
+                        (self.x // 16, self.y // 16 - tile_in_way), 4)['solid'] != 1)):
                         pass
                     else:
                         way_is_clear = False
@@ -809,6 +850,7 @@ class Hero(pygame.sprite.Sprite):
                     if self.level.get_tile_properties((self.x // 16, self.y // 16 - y), 3)['trap'] == 1:
                         self.invincibleTime = 30
                         self.hp -= 1
+                        self.showHitTime = 6
                         self.knockback(2, self.mirror)
         except BaseException:
             pass
@@ -866,8 +908,12 @@ class Hero(pygame.sprite.Sprite):
         if self.jumping > 0 and self.crush:
             self.jumping = 0
         if self.jumping > 0 and self.crush is False:
-            self.jumping -= 1
-            self.y_step = -32
+            if self.level.get_tile_properties((self.x // 16, self.y // 16 - 1), 2)['solid'] != 1 and self.level.get_tile_properties((self.x // 16, self.y // 16 - 2), 2)['solid'] != 1:
+                self.jumping -= 1
+                self.y_step = -32
+            else:
+                self.jumping = 0
+                self.crush = True
         elif self.jumping < 1 and not self.crush and \
                 self.level.get_tile_properties((self.x // 16, self.y // 16 + 1), 2)['solid'] == 0:
             self.crush = True
@@ -907,42 +953,48 @@ pygame.time.set_timer(update_anims_player, 60)
 update_anims_enemy = pygame.USEREVENT + 2
 pygame.time.set_timer(update_anims_enemy, 80)
 background = load_image('map/background1.png')
+minimap_back = load_image('map/minimap/back.png')
+map_back = load_image('map/minimap/full_map_back.png')
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            Game.levels[Game.cur_level_x][Game.cur_level_y].drop.append(
-                Drop(load_image('drop/hp.png'), 3, 3, event.pos[0], (event.pos[1] // 16) * 16,
-                     Game.levels[Game.cur_level_x][Game.cur_level_y], 'hp',
-                     1))
-        if event.type == update_anims_player:
-            player_group.update()
-            Game.player.idle_if_need()
-            Game.player.play_dead_if_need()
-            Game.player.clear_move()
-            Game.levels[Game.cur_level_x][Game.cur_level_y].gui_group.update()
-            for drop_ in Game.levels[Game.cur_level_x][Game.cur_level_y].drop:
-                drop_.clear_move()
-        if event.type == update_anims_enemy:
-            Game.levels[Game.cur_level_x][Game.cur_level_y].enemies_group.update()
-            for enemy in Game.levels[Game.cur_level_x][Game.cur_level_y].enemies:
-                enemy.idle_if_need()
-                enemy.play_dead_if_need()
-                enemy.clear_move()
-        if Game.player.knockback_time == 0 and Game.player.hp > 0:
-            if pygame.key.get_pressed()[pygame.K_SPACE]:
-                Game.player.jump()
-            if pygame.key.get_pressed()[pygame.K_RIGHT]:
-                # Game.levels[Game.cur_level_x][Game.cur_level_y].enemies[0].move_right()
-                Game.player.move_right()
-            if pygame.key.get_pressed()[pygame.K_LEFT]:
-                # Game.levels[Game.cur_level_x][Game.cur_level_y].enemies[0].move_left()
-                Game.player.move_left()
-            if pygame.key.get_pressed()[pygame.K_f]:
-                Game.player.attack()
-            if pygame.key.get_pressed()[pygame.K_DOWN]:
-                Game.player.jump_off()
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_m:
+            Game.MapIsOpen = not Game.MapIsOpen
+        if not Game.MapIsOpen:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                Game.levels[Game.cur_level_x][Game.cur_level_y].drop.append(
+                    Drop(load_image('drop/hp.png'), 3, 3, event.pos[0], (event.pos[1] // 16) * 16,
+                         Game.levels[Game.cur_level_x][Game.cur_level_y], 'hp',
+                         1))
+            if event.type == update_anims_player:
+                player_group.update()
+                Game.player.idle_if_need()
+                Game.player.play_dead_if_need()
+                Game.player.clear_move()
+                Game.levels[Game.cur_level_x][Game.cur_level_y].gui_group.update()
+                for drop_ in Game.levels[Game.cur_level_x][Game.cur_level_y].drop:
+                    drop_.clear_move()
+            if event.type == update_anims_enemy:
+                Game.levels[Game.cur_level_x][Game.cur_level_y].enemies_group.update()
+                for enemy in Game.levels[Game.cur_level_x][Game.cur_level_y].enemies:
+                    enemy.idle_if_need()
+                    enemy.play_dead_if_need()
+                    enemy.clear_move()
+            if Game.player.knockback_time == 0 and Game.player.hp > 0:
+                if pygame.key.get_pressed()[pygame.K_SPACE]:
+                    Game.player.jump()
+                if pygame.key.get_pressed()[pygame.K_RIGHT]:
+                    # Game.levels[Game.cur_level_x][Game.cur_level_y].enemies[0].move_right()
+                    Game.player.move_right()
+                if pygame.key.get_pressed()[pygame.K_LEFT]:
+                    # Game.levels[Game.cur_level_x][Game.cur_level_y].enemies[0].move_left()
+                    Game.player.move_left()
+                if pygame.key.get_pressed()[pygame.K_f]:
+                    Game.player.attack()
+                if pygame.key.get_pressed()[pygame.K_DOWN]:
+                    Game.player.jump_off()
+
     if Game.player.is_in_exit_tile() and not Game.isLevelChanging:
         Game.change_level(Game.player.is_in_exit_tile())
     screen.blit(background, (0, 0))
@@ -954,5 +1006,10 @@ while running:
         Game.levels[Game.cur_level_x][Game.cur_level_y].check_is_cleared()
         Game.levels[Game.cur_level_x][Game.cur_level_y].check_for_stacked_enemies()
     player_gui_group.draw(screen)
+    if not Game.MapIsOpen:
+        screen.blit(minimap_back, (816, 16))
+    else:
+        screen.blit(map_back, (32, 32))
+    Game.load_minimap(screen)
     clock.tick(FPS)
     pygame.display.flip()
