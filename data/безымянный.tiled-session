@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "map/1110_0.tmx",
+    "activeFile": "map/minimap/0110_empty.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "Все файлы (*)",
@@ -48,32 +48,32 @@
             "scale": 0.8263020833333332,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 479.84872360542084,
-                "y": 240.22691459186893
+                "x": 481.05893476205495,
+                "y": 240.832020170186
             }
         },
         "map/0010_0.tmx": {
             "scale": 0.8263020833333332,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 479.84872360542084,
-                "y": 240.22691459186893
+                "x": 481.05893476205495,
+                "y": 240.832020170186
             }
         },
         "map/0011_0.tmx": {
             "scale": 0.8127561475409836,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 479.23353293413174,
-                "y": 240.53955247399944
+                "x": 479.2335329341317,
+                "y": 241.15474314528842
             }
         },
         "map/0100_0.tmx": {
             "scale": 0.8263020833333332,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 479.84872360542084,
-                "y": 240.22691459186893
+                "x": 481.05893476205495,
+                "y": 240.832020170186
             }
         },
         "map/0101_0.tmx": {
@@ -85,11 +85,11 @@
             }
         },
         "map/0110_0.tmx": {
-            "scale": 0.75,
+            "scale": 1,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 471.33333333333326,
-                "y": 240.66666666666663
+                "x": 471.5,
+                "y": 240
             }
         },
         "map/0111_0.tmx": {
@@ -104,16 +104,16 @@
             "scale": 0.8263020833333332,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 481.05893476205495,
-                "y": 240.832020170186
+                "x": 482.269145918689,
+                "y": 242.04223132682012
             }
         },
         "map/1001_0.tmx": {
             "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 471.33333333333326,
-                "y": 240.66666666666663
+                "x": 471.33333333333337,
+                "y": 241.33333333333337
             }
         },
         "map/1010_0.tmx": {
@@ -121,48 +121,68 @@
             "selectedLayer": 2,
             "viewCenter": {
                 "x": 471.85124487866375,
-                "y": 241.15474314528842
+                "y": 242.38512448786634
             }
         },
         "map/1011_0.tmx": {
             "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 479.33333333333326,
-                "y": 240.66666666666663
+                "x": 479.33333333333337,
+                "y": 241.33333333333337
             }
         },
         "map/1100_0.tmx": {
             "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 471.33333333333326,
-                "y": 240.66666666666663
+                "x": 471.33333333333337,
+                "y": 241.33333333333337
             }
         },
         "map/1101_0.tmx": {
             "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 479.33333333333326,
-                "y": 240.66666666666663
+                "x": 479.33333333333337,
+                "y": 241.33333333333337
             }
         },
         "map/1110_0.tmx": {
             "scale": 0.8127561475409836,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 471.8512448786637,
-                "y": 240.53955247399944
+                "x": 471.85124487866375,
+                "y": 241.15474314528842
             }
         },
         "map/1111_0.tmx": {
             "scale": 0.8127561475409836,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 471.8512448786637,
-                "y": 240.53955247399944
+                "x": 471.85124487866375,
+                "y": 241.15474314528842
             }
+        },
+        "map/minimap/0110.tmx": {
+            "scale": 11,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.772727272727273,
+                "y": 20.36363636363636
+            }
+        },
+        "map/minimap/0110_empty.tmx": {
+            "scale": 13.220833333333331,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 30.141821619918062,
+                "y": 15.127639457926257
+            }
+        },
+        "map/minimap/tsx/palette.tsx": {
+            "scaleInDock": 5.5,
+            "scaleInEditor": 11
         },
         "map/standart_map.tmx": {
             "scale": 0.5,
@@ -258,47 +278,35 @@
     },
     "map.height": 30,
     "map.lastUsedFormat": "tmx",
-    "map.tileHeight": 16,
-    "map.tileWidth": 16,
+    "map.layerDataFormat": null,
+    "map.tileHeight": 1,
+    "map.tileWidth": 1,
     "map.width": 60,
     "openFiles": [
-        "map/1000_0.tmx",
-        "map/1001_0.tmx",
-        "map/1010_0.tmx",
-        "map/1011_0.tmx",
-        "map/1100_0.tmx",
-        "map/1101_0.tmx",
-        "map/1110_0.tmx",
-        "map/1111_0.tmx",
-        "map/0001_0.tmx",
-        "map/0010_0.tmx",
-        "map/0011_0.tmx",
-        "map/0100_0.tmx",
-        "map/0101_0.tmx",
-        "map/0110_0.tmx",
-        "map/0111_0.tmx"
+        "map/minimap/tsx/palette.tsx",
+        "map/minimap/0110_empty.tmx"
     ],
     "project": "",
     "property.type": "string",
     "recentFiles": [
-        "map/1000_0.tmx",
-        "map/1001_0.tmx",
-        "map/1010_0.tmx",
-        "map/1011_0.tmx",
-        "map/1100_0.tmx",
-        "map/1101_0.tmx",
-        "map/0111_0.tmx",
+        "map/minimap/tsx/palette.tsx",
+        "map/minimap/0110_empty.tmx",
         "map/0110_0.tmx",
+        "map/minimap/0110.tmx",
+        "map/0111_0.tmx",
         "map/0101_0.tmx",
         "map/0100_0.tmx",
         "map/0011_0.tmx",
-        "map/0010_0.tmx"
+        "map/0010_0.tmx",
+        "map/0001_0.tmx",
+        "map/1111_0.tmx",
+        "map/1110_0.tmx"
     ],
     "tileset.embedInMap": false,
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 16,
-        "width": 16
+        "height": 1,
+        "width": 1
     },
     "tileset.transparentColor": "#ffffff",
     "tileset.useTransparentColor": false
