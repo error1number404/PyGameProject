@@ -2075,7 +2075,7 @@ class Menu:
             text = font.render("A nightmare about the past", True, [220, 220, 220])
             screen.blit(text, (60, 0))
             tips_font = pygame.font.Font('data/font/font.ttf', 32)
-            screen.blit(tips_font.render("Стрелочки влево/вправо - передвежение", True, [220, 220, 220]),(10,380))
+            screen.blit(tips_font.render("Стрелочки влево/вправо - передвижение", True, [220, 220, 220]),(10,380))
             screen.blit(tips_font.render("F - атака", True, [220, 220, 220]), (10, 410))
             screen.blit(tips_font.render("Пробел - прыжок", True, [220, 220, 220]), (10, 440))
 
