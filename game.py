@@ -10,7 +10,7 @@ pygame.init()
 FPS = 60
 
 
-class shop():
+class shop:
     def open_shop(self):
         if Game.inShop:
             self.manager = 'deleted'  # manager creates another CPU process / pickle can't save objects when it uses in not main process
@@ -82,7 +82,7 @@ def load_image(name, colorkey=None):
     return [image, name]
 
 
-class game():
+class game:
     def __init__(self):
         self.GUI = []
         self.difficulty = 0
@@ -485,6 +485,9 @@ class level:
             self.numbers[i].load()
         if self.isLoaded:
             self.map = pytmx.load_pygame(f'{self.filename}''.tmx')
+            if self.isBossRoom:
+                self.game.tips[1] = [(x * 16, (y - 4) * 16), 'Для возвращения на остров, нажмите Е',
+                                     self.check_requirment, self.game.load_vendor_room, False]
 
     def load_level(self):
         if not self.isLoaded:
@@ -824,6 +827,8 @@ class Vendor(pygame.sprite.Sprite):
         self.cut_sheet(load_image('vendor/idle.png')[0], 7, 1)
         self.image = self.frames[self.cur_frame % len(self.frames)]
         self.game = Game
+        self.game.tips[0] = [(self.x - 64, self.y - 80), 'Для открытия магазина, нажми E',
+                             self.check_requirment, Shop.open_shop, False]
 
     def check_requirment(self, obj):
         if obj.inVendorRoom:
@@ -2075,7 +2080,7 @@ class Menu:
             text = font.render("A nightmare about the past", True, [220, 220, 220])
             screen.blit(text, (60, 0))
             tips_font = pygame.font.Font('data/font/font.ttf', 32)
-            screen.blit(tips_font.render("Стрелочки влево/вправо - передвижение", True, [220, 220, 220]),(10,380))
+            screen.blit(tips_font.render("Стрелочки влево/вправо - передвижение", True, [220, 220, 220]), (10, 380))
             screen.blit(tips_font.render("F - атака", True, [220, 220, 220]), (10, 410))
             screen.blit(tips_font.render("Пробел - прыжок", True, [220, 220, 220]), (10, 440))
 
