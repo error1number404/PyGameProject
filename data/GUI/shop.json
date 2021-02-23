@@ -1,0 +1,24 @@
+{
+  "button":
+  {
+    "font":
+    {
+        "name": "regular_font",
+        "size": "32",
+        "bold": "0",
+        "italic": "0",
+        "regular_path": "data/font/font.ttf"
+
+    },
+    "images":
+    {
+      "normal_image": {
+        "path":"data/GUI/cell.png"
+
+      },
+      "hovered_image": {
+        "path":"data/GUI/hovered_cell.png"
+      }
+    }
+   }
+}

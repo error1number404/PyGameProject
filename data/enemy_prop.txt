@@ -1,0 +1,5 @@
+4,8,8,4,1,0,0
+4,8,8,4,1,8,11
+4,4,8,4,1,8,6
+8,8,8,4,1,8,6
+idle,run,attack,dead,landing,projectile,projectile_attack
