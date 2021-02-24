@@ -7,7 +7,7 @@ import pygame_gui
 import pickle
 
 pygame.init()
-FPS = 60
+FPS = 1000
 
 
 class shop:
@@ -131,6 +131,10 @@ class game:
         self.vendor_group = vendor_group
         with open(f'data/saves/{name}.dat', 'wb') as file:
             pickle.dump(self, file)
+        for i in range(len(self.levels)):
+            for j in range(len(self.levels[0])):
+                if self.levels[i][j] is not None and self.levels[i][j].isLoaded and self.levels[i][j].isBossRoom:
+                    self.tips[1][2] = self.levels[i][j].check_requirement
         self.player_group = ''
         self.enemies_group = ''
         self.numbers_group = ''
@@ -168,6 +172,7 @@ class game:
     def load_vendor_room(self):
         self.levels = [[None] * 7 for i in range(7)]
         self.inVendorRoom = True
+        self.inBossRoom = False
         self.levels[3][3] = level(f'data/map/vendor_room', self.player, self)
         self.levels[3][3].load_level()
         self.player.teleport_self(480, 100)
@@ -175,6 +180,7 @@ class game:
         self.cur_level_y = 3
         self.difficulty += 1
         self.player.update_cur_level()
+        self.tips[1] = ['variable_tip']
 
     def generate_map(self):
         self.levels = [[None] * 7 for i in range(7)]
@@ -289,7 +295,6 @@ class game:
         self.levels[x][y] = level(f'data/map/{boss_type}_0_boss',
                                   self.player, self)
         self.levels[x][y].isBossRoom = True
-        print(x, y)
         return True
 
     def choose_type(self, room, x, y):
@@ -486,8 +491,8 @@ class level:
         if self.isLoaded:
             self.map = pytmx.load_pygame(f'{self.filename}''.tmx')
             if self.isBossRoom:
-                self.game.tips[1] = [(x * 16, (y - 4) * 16), 'Для возвращения на остров, нажмите Е',
-                                     self.check_requirment, self.game.load_vendor_room, False]
+                self.game.tips[1] = [self.game.tips[1][0], 'Для возвращения на остров, нажмите Е',
+                                     self.check_requirement, self.game.load_vendor_room, False]
 
     def load_level(self):
         if not self.isLoaded:
@@ -502,13 +507,13 @@ class level:
                         try:
                             if self.get_tile_properties((x, y), 1)['description'] == 'vendor_enter':
                                 self.game.tips[1] = [(x * 16, (y - 4) * 16), 'Для возвращения на остров, нажмите Е',
-                                                     self.check_requirment, self.game.load_vendor_room, False]
+                                                     self.check_requirement, self.game.load_vendor_room, False]
                                 break
                         except BaseException:
                             pass
             self.isLoaded = True
 
-    def check_requirment(self, obj):
+    def check_requirement(self, obj):
         if obj.levels[obj.cur_level_x][obj.cur_level_y].isCleared and obj.inBossRoom:
             return True
         return False
@@ -684,8 +689,6 @@ class Coins:
         screen.blit(self.coins, (self.x, self.y))
         font = pygame.font.Font('data/font/font.ttf', 24)
         text = font.render(f"{self.target.coins}", True, self.text_color)
-        text_w = text.get_width()
-        text_h = text.get_height()
         screen.blit(text, (self.x + 40, self.y))
 
     def save(self):
@@ -808,7 +811,7 @@ class Vendor(pygame.sprite.Sprite):
         super().__init__(vendor_group)
         self.game = game
         self.game.tips[0] = [(x - 64, y - 80), 'Для открытия магазина, нажми E',
-                             self.check_requirment, Shop.open_shop, False]
+                             self.check_requirement, Shop.open_shop, False]
         self.frames = []
         self.cur_frame = 0
         self.x, self.y = x, y
@@ -828,9 +831,9 @@ class Vendor(pygame.sprite.Sprite):
         self.image = self.frames[self.cur_frame % len(self.frames)]
         self.game = Game
         self.game.tips[0] = [(self.x - 64, self.y - 80), 'Для открытия магазина, нажми E',
-                             self.check_requirment, Shop.open_shop, False]
+                             self.check_requirement, Shop.open_shop, False]
 
-    def check_requirment(self, obj):
+    def check_requirement(self, obj):
         if obj.inVendorRoom:
             return True
         return False
@@ -1512,7 +1515,7 @@ class Boss(pygame.sprite.Sprite):
                 self.x // 16 + 16 > self.player.x // 16 and self.x // 16 - 16 < self.player.x // 16):
             self.react += 1
             try_to_attack = random.choice([True, False])
-            if self.react // 8 > 0 and try_to_attack:
+            if self.react // 12 > 0 and try_to_attack:
                 if self.x // 16 <= self.player.x // 16 < self.x // 16 + 5:
                     self.isRanged = False
                     self.attack(False)
@@ -1957,7 +1960,7 @@ class Menu:
             self.buttons["Load game"].kill()
             self.buttons["Exit"] = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((75, 210), (240, 40)),
                                                                 manager=self.manager,
-                                                                text='Выход на рабочий стол')
+                                                                text='Выход')
             self.buttons["New game"] = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((75, 70), (240, 40)),
                                                                     manager=self.manager,
                                                                     text='Начать новую игру')
@@ -2024,7 +2027,7 @@ class Menu:
                                                                  text='Загрузить игру')
         self.buttons["Exit"] = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((75, 210), (240, 40)),
                                                             manager=self.manager,
-                                                            text='Выход на рабочий стол')
+                                                            text='Выход')
         self.buttons["Save game"] = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((75, 70), (240, 40)),
                                                                  manager=self.manager,
                                                                  text='Сохранить игру')
@@ -2080,6 +2083,8 @@ class Menu:
             text = font.render("A nightmare about the past", True, [220, 220, 220])
             screen.blit(text, (60, 0))
             tips_font = pygame.font.Font('data/font/font.ttf', 32)
+            screen.blit(tips_font.render("M - открыть/закрыть карту", True, [220, 220, 220]), (10, 320))
+            screen.blit(tips_font.render("Стрелочка вниз - спрыгнуть с платформы", True, [220, 220, 220]), (10, 350))
             screen.blit(tips_font.render("Стрелочки влево/вправо - передвижение", True, [220, 220, 220]), (10, 380))
             screen.blit(tips_font.render("F - атака", True, [220, 220, 220]), (10, 410))
             screen.blit(tips_font.render("Пробел - прыжок", True, [220, 220, 220]), (10, 440))
@@ -2108,6 +2113,9 @@ class Menu:
             Game.inMenu = False
             if self.type != 'ingame':
                 self.change_menu()
+                if self.type == 'start':
+                    self.type = 'ingame'
+                    self.load_front_view()
         elif pressed_button == self.buttons["Menu exit"]:
             self.game.unload_game()
             self.change_menu()
@@ -2188,8 +2196,8 @@ while running:
                     Game.player.play_dead_if_need()
                     Game.player.clear_move()
                     Game.levels[Game.cur_level_x][Game.cur_level_y].gui_group.update()
-                    for drop_ in Game.levels[Game.cur_level_x][Game.cur_level_y].drop:
-                        drop_.clear_move()
+                    for dropp in Game.levels[Game.cur_level_x][Game.cur_level_y].drop:
+                        dropp.clear_move()
                 if event.type == update_anims_enemy:
                     Game.levels[Game.cur_level_x][Game.cur_level_y].enemies_group.update()
                     for enemy in Game.levels[Game.cur_level_x][Game.cur_level_y].enemies:
